@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather for You!</title>
+</head>
+
+<body>
+    <h1>CURRENT WEATHER</h1>
+    <p id='weather' style="font-weight: bold"></p>
+    <button id='button'> Press to get weather</button>
+
+    <script>
+        document.getElementById('button').addEventListener('click', getWeather);
+        let endPoint = `http://api.openweathermap.org/data/2.5/weather?zip=00000,us&APPID=`;
+            const myKey = ``;
+            endPoint += myKey
+            console.log(endPoint);
+        function getWeather() {
+
+
+
+            //constructor: create an instance of the Extended Markup Language Hypertext Request 
+            const Xhr = new XMLHttpRequest();
+
+            //OPEN
+
+            Xhr.open('GET', endPoint, true);
+
+
+            //ONLOAD CALLBACK Function  
+
+            Xhr.onload = () => {  
+
+                let weatherData = Xhr.responseText;
+
+                weatherData = JSON.parse(weatherData);
+                console.log(weatherData);
+                let convertedWeatherData = Math.round(weatherData.main.temp* 9/5 - 459.67);
+                let convertedFeelsLikeTemp = Math.round(weatherData.main.feels_like* 9/5 -459.67);
+
+                         document.getElementById("weather").innerHTML = `It's ${convertedWeatherData} degrees in ${weatherData.name} right now. It feels like ${convertedFeelsLikeTemp}.`;
+                          console.log(weatherData.main.temp);
+                // }
+                
+            }
+            //send
+            Xhr.send();
+        }
+
+
+
+    </script>
+
+</body>
+</html>
